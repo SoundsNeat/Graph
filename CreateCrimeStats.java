@@ -54,7 +54,7 @@ public class CreateCrimeStats{
         for (int i = 0; i < crimeDataYears.length; i++) {        
 	        startMurderData = html.indexOf("<td>", startMurderData) + 4;
 	        endMurderData = html.indexOf("</td>", startMurderData);
-	        murderData = Integer.parseInt(html.substring(startMurderData, endMurderData));
+	        murderData = Integer.parseInt(html.substring(startMurderData, endMurderData).replaceAll(",",""));
 	        numMurders[i] = murderData;
         } // end for i
         crimeStats.setNumMurders(numMurders);
@@ -82,7 +82,7 @@ public class CreateCrimeStats{
         for (int i = 0; i < crimeDataYears.length; i++) {        
 	        startRapeData = html.indexOf("<td>", startRapeData) + 4;
 	        endRapeData = html.indexOf("</td>", startRapeData);
-	        RapeData = Integer.parseInt(html.substring(startRapeData, endRapeData));
+	        RapeData = Integer.parseInt(html.substring(startRapeData, endRapeData).replaceAll(",",""));
 	        numRapes[i] = RapeData;
         } // end for i
         crimeStats.setNumRapes(numRapes);
@@ -110,7 +110,7 @@ public class CreateCrimeStats{
         for (int i = 0; i < crimeDataYears.length; i++) {        
 	        startRobberyData = html.indexOf("<td>", startRobberyData) + 4;
 	        endRobberyData = html.indexOf("</td>", startRobberyData);
-	        robberyData = Integer.parseInt(html.substring(startRobberyData, endRobberyData));
+	        robberyData = Integer.parseInt(html.substring(startRobberyData, endRobberyData).replaceAll(",",""));
 	        numRobberys[i] = robberyData;
         } // end for i
         crimeStats.setNumRobberies(numRobberys);
@@ -139,7 +139,7 @@ public class CreateCrimeStats{
         for (int i = 0; i < crimeDataYears.length; i++) {        
 	        startAssaultData = html.indexOf("<td>", startAssaultData) + 4;
 	        endAssaultData = html.indexOf("</td>", startAssaultData);
-	        AssaultData = Integer.parseInt(html.substring(startAssaultData, endAssaultData));
+	        AssaultData = Integer.parseInt(html.substring(startAssaultData, endAssaultData).replaceAll(",",""));
 	        numAssaults[i] = AssaultData;
         } // end for i
         crimeStats.setNumAssaults(numAssaults);
