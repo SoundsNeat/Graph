@@ -246,12 +246,18 @@ public class CreateCrimeStats{
         
       //-----------------Parse-number-of-incidents-of-arson-per-year-----------------
         int startArsonData = html.indexOf("Arson", endAutoTheftStats);
+        int endArsonData = startArsonData;
+        int[] numArsons = new int[crimeDataYears.length];
+        float[] arsonStats = new float[crimeDataYears.length];
+        
         if(endAutoTheftStats - startArsonData > 1000){
-        	
+        	for (int i = 0; i < crimeDataYears.length; i++) {
+				numArsons[i] = -0;
+				arsonStats[i] = -0;
+				crimeStats.setNumArsons(numArsons);
+				crimeStats.setArsonStats(arsonStats);
+			} // end for i
         } else {
-	        int endArsonData = startArsonData;
-	        int[] numArsons = new int[crimeDataYears.length];
-	        float[] arsonStats = new float[crimeDataYears.length];
 	        int arsonData = 0;
 	        
 	        for (int i = 0; i < crimeDataYears.length; i++) {        
