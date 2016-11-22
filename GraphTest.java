@@ -29,10 +29,17 @@ public class GraphTest {
 			if(args.length < 2) throw new Exception("must provide city and state as arguments, e.g. Pomona California");
 			else if(args.length >= 2){ // for inputs such as Los Angeles California
 				int i;
+				if(args[args.length - 1].equals("York")){
+					args[args.length - 1] = args[args.length - 2] + "-" + args[args.length - 1];
+					args[args.length - 2] = "";
+				}
 				for (i = 1; i < args.length - 1; i++) {
 					args[0] = args[0] + " " + args[i];
 				} // end for i
+				args[0] = args[0].trim();
 				args[1] = args[i];
+//				System.out.println(args[0] + ", " +  args[1]);
+//				System.exit(0);
 				try {
 					cityA = new CreateCrimeStats(args[0], args[1]);
 				} catch (IOException e) {
