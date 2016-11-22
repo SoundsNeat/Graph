@@ -23,7 +23,7 @@ public class CreateCrimeStats{
     	  
     	city = city.replaceAll(" ", "-");
         Document doc = Jsoup.connect("http://www.city-data.com/city/" + city + "-" + state + ".html").get();  
-        String html = doc.toString();  
+        String html = doc.toString().replaceAll("N/A", "-0");
         city = city.replaceAll("-", " ");        
 
         //-----------------Parse-crime-data-years-----------------
