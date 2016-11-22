@@ -22,9 +22,11 @@ public class CreateCrimeStats{
     	crimeStats = new CrimeStats(city, state);
     	  
     	city = city.replaceAll(" ", "-");
+//    	System.out.println("http://www.city-data.com/city/" + city + "-" + state + ".html");
+//    	System.exit(0);
         Document doc = Jsoup.connect("http://www.city-data.com/city/" + city + "-" + state + ".html").get();  
         String html = doc.toString().replaceAll("N/A", "-0");
-        city = city.replaceAll("-", " ");        
+        city = city.replaceAll("-", " ");
 
         //-----------------Parse-crime-data-years-----------------
         int crimeData = html.indexOf("Crime rates in " + city + " by Year") - 10;
@@ -244,31 +246,34 @@ public class CreateCrimeStats{
         
       //-----------------Parse-number-of-incidents-of-arson-per-year-----------------
         int startArsonData = html.indexOf("Arson", endAutoTheftStats);
-        int endArsonData = startArsonData;
-        int[] numArsons = new int[crimeDataYears.length];
-        int arsonData = 0;
-        
-        for (int i = 0; i < crimeDataYears.length; i++) {        
-	        startArsonData = html.indexOf("<td>", startArsonData) + 4;
-	        endArsonData = html.indexOf("</td>", startArsonData);
-	        arsonData = Integer.parseInt(html.substring(startArsonData, endArsonData).replaceAll(",",""));
-	        numArsons[i] = arsonData;
-        } // end for i
-        crimeStats.setNumArsons(numArsons);
-      
-        //----------Parse-number-of-incidents-of-arson-per-year-per-100,000------------
-        int startArsonStats = html.indexOf("</td>", endArsonData + 5);        
-        int endArsonStats = startArsonData;
-        float[] arsonStats = new float[crimeDataYears.length];
-        float arsonStat;
-        
-        for (int i = 0; i < crimeDataYears.length; i++) {        
-	        startArsonStats = html.indexOf("<td>", startArsonStats) + 4;
-	        endArsonStats = html.indexOf("</td>", startArsonStats);
-	        arsonStat = Float.parseFloat(html.substring(startArsonStats, endArsonStats).replaceAll(",",""));
-	        arsonStats[i] = arsonStat;
-        } // end for i
-        crimeStats.setArsonStats(arsonStats);
+        if(endAutoTheftStats - startArsonData > 1000){
+        	
+        } else {
+	        int endArsonData = startArsonData;
+	        int[] numArsons = new int[crimeDataYears.length];
+	        float[] arsonStats = new float[crimeDataYears.length];
+	        int arsonData = 0;
+	        
+	        for (int i = 0; i < crimeDataYears.length; i++) {        
+		        startArsonData = html.indexOf("<td>", startArsonData) + 4;
+		        endArsonData = html.indexOf("</td>", startArsonData);
+		        arsonData = Integer.parseInt(html.substring(startArsonData, endArsonData).replaceAll(",",""));
+		        numArsons[i] = arsonData;
+	        } // end for i
+	        crimeStats.setNumArsons(numArsons);
+	      
+	        //----------Parse-number-of-incidents-of-arson-per-year-per-100,000------------
+	        int startArsonStats = html.indexOf("</td>", endArsonData + 5);        
+	        int endArsonStats = startArsonData;
+	        float arsonStat;	        
+	        for (int i = 0; i < crimeDataYears.length; i++) {        
+		        startArsonStats = html.indexOf("<td>", startArsonStats) + 4;
+		        endArsonStats = html.indexOf("</td>", startArsonStats);
+		        arsonStat = Float.parseFloat(html.substring(startArsonStats, endArsonStats).replaceAll(",",""));
+		        arsonStats[i] = arsonStat;
+	        } // end for i
+	        crimeStats.setArsonStats(arsonStats);
+        }
         
         crimeStats.setCrimeDataIndex();
     }  
